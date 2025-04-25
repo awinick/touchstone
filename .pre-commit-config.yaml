@@ -1,0 +1,35 @@
+repos:
+  - repo: local
+    hooks:
+      - id: black
+        name: black
+        entry: poetry run black
+        language: system
+        types: [python]
+
+      - id: ruff
+        name: ruff
+        entry: poetry run ruff check
+        language: system
+        types: [python]
+
+      - id: mypy
+        name: mypy
+        entry: poetry run mypy
+        language: system
+        types: [python]
+
+      - id: coverage-check
+        name: coverage run + report (optional)
+        entry: bash -c 'poetry run coverage run -m pytest && poetry run coverage report'
+        language: system
+        pass_filenames: false
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-json
+      - id: check-toml
+      - id: check-added-large-files
