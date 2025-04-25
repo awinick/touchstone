@@ -41,6 +41,7 @@ def simulate_counts(
 ) -> dict:
     """
     Simulate the quantum circuit and return the counts of the measurement results.
+
     The circuit is executed using a statevector simulator.
 
     Parameters

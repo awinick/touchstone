@@ -6,10 +6,10 @@ Identifies a hidden bitstring using a single query to a phase oracle.
 
 from qiskit.circuit import QuantumCircuit
 
-from touchstone.algorithms.base_algorithm import BaseAlgorithm, MeasurementMode
+from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution, MeasurementMode
 
 
-class BernsteinVazirani(BaseAlgorithm):
+class BernsteinVazirani(BaseAlgorithm, HasDistribution):
     """
     Bernstein-Vazirani algorithm for recovering a hidden bitstring.
 
@@ -19,6 +19,8 @@ class BernsteinVazirani(BaseAlgorithm):
 
     def __init__(self, hidden_string: str):
         """
+        Initialize the Bernstein-Vazirani algorithm with a hidden bitstring.
+
         Parameters
         ----------
         hidden_string : str
@@ -62,3 +64,14 @@ class BernsteinVazirani(BaseAlgorithm):
             circuit.measure(range(self.num_qubits), range(self.num_qubits))
 
         return circuit
+
+    def distribution(self) -> dict[str, float]:
+        """
+        Return the distribution of measurement outcomes.
+
+        Returns
+        -------
+        dict[str, float]
+            A dictionary with the expected measurement outcomes and their probabilities.
+        """
+        return {self.hidden_string: 1.0}

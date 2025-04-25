@@ -31,7 +31,19 @@ mkdocstrings-python = "^1.16.10"
 line-length = 100
 
 [tool.ruff]
-line-length = 100
+line-length = 100 
+
+[tool.ruff.lint]
+extend-select = [
+    "D",    # pydocstyle (for missing docstrings)
+    "E",    # pycodestyle errors
+    "F",    # pyflakes
+    "W",    # pycodestyle warnings
+    "C90",  # mccabe (complexity)
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
 
 [tool.coverage.run]
 branch = true

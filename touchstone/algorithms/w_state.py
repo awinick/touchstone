@@ -1,14 +1,12 @@
-"""
-W state preparation algorithm.
-"""
+"""W state preparation algorithm."""
 
 import numpy as np
 from qiskit import QuantumCircuit
 
-from touchstone.algorithms.base_algorithm import BaseAlgorithm, MeasurementMode
+from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution, MeasurementMode
 
 
-class WState(BaseAlgorithm):
+class WState(BaseAlgorithm, HasDistribution):
     r"""
     Algorithm for preparing a W state.
 
@@ -24,6 +22,8 @@ class WState(BaseAlgorithm):
 
     def __init__(self, num_qubits: int):
         """
+        Initialize the W state preparation algorithm.
+
         Parameters
         ----------
         num_qubits : int
@@ -60,3 +60,17 @@ class WState(BaseAlgorithm):
             circuit.measure_all()
 
         return circuit
+
+    def distribution(self) -> dict[str, float]:
+        """
+        Return the distribution of measurement outcomes.
+
+        Returns
+        -------
+        dict[str, float]
+            A dictionary with the expected measurement outcomes and their probabilities.
+        """
+        return {
+            i * "0" + "1" + (self.num_qubits - 1 - i) * "0": 1 / self.num_qubits
+            for i in range(self.num_qubits)
+        }

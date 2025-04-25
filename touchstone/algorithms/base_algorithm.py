@@ -56,21 +56,18 @@ class BaseAlgorithm(ABC):
     def build(
         self,
         measurement: MeasurementMode = MeasurementMode.DEFAULT,
-        decompose: bool = True,
+        decompose_custom: bool = True,
     ) -> QuantumCircuit:
         """
         Construct the circuit implementing the algorithm.
-
-        This method wraps the subclass-defined `_build()` method and optionally
-        applies global measurement and decomposition logic.
 
         Parameters
         ----------
         measurement : MeasurementMode
             Controls how measurement operations are applied to the circuit.
 
-        decompose : bool
-            If True, decomposes the circuit into standard gates.
+        decompose_custom : bool
+            If True, decomposes the custom gates in the circuit into standard gates.
 
         Returns
         -------
@@ -82,7 +79,9 @@ class BaseAlgorithm(ABC):
         if measurement == MeasurementMode.ALL:
             circuit.measure_all()
 
-        return circuit.decompose() if decompose else circuit
+        if decompose_custom and hasattr(self, "_custom_gates"):
+            return circuit.decompose(self._custom_gates)
+        return circuit
 
     @abstractmethod
     def _build(self, measurement: MeasurementMode) -> QuantumCircuit:
@@ -101,4 +100,24 @@ class BaseAlgorithm(ABC):
         -------
         QuantumCircuit
             The constructed quantum circuit.
+        """
+
+
+class HasDistribution(ABC):
+    """
+    Interface for algorithms with a known measurement outcome distribution.
+
+    Classes implementing this interface must define the expected distribution of
+    measurement outcomes as a mapping from bitstrings to probabilities.
+    """
+
+    @abstractmethod
+    def distribution(self) -> dict[str, float]:
+        """
+        Return the distribution of measurement outcomes.
+
+        Returns
+        -------
+        dict[str, float]
+            A dictionary with the expected measurement outcomes and their probabilities.
         """

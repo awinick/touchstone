@@ -1,13 +1,11 @@
-"""
-Greenberger-Horne-Zeilinger (GHZ) state preparation algorithm.
-"""
+"""Greenberger-Horne-Zeilinger (GHZ) state preparation algorithm."""
 
 from qiskit import QuantumCircuit
 
-from touchstone.algorithms.base_algorithm import BaseAlgorithm, MeasurementMode
+from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution, MeasurementMode
 
 
-class GHZ(BaseAlgorithm):
+class GHZ(BaseAlgorithm, HasDistribution):
     r"""
     Algorithm for preparing a GHZ (Greenberger-Horne-Zeilinger) state.
 
@@ -23,6 +21,8 @@ class GHZ(BaseAlgorithm):
 
     def __init__(self, num_qubits: int):
         """
+        Initialize the GHZ state preparation algorithm.
+
         Parameters
         ----------
         num_qubits : int
@@ -50,3 +50,17 @@ class GHZ(BaseAlgorithm):
             circuit.measure_all()
 
         return circuit
+
+    def distribution(self) -> dict[str, float]:
+        """
+        Return the distribution of measurement outcomes.
+
+        Returns
+        -------
+        dict[str, float]
+            A dictionary with the expected measurement outcomes and their probabilities.
+        """
+        return {
+            "0" * self.num_qubits: 0.5,
+            "1" * self.num_qubits: 0.5,
+        }

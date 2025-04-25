@@ -21,6 +21,8 @@ class RippleCarryAdder(BaseAlgorithm):
 
     def __init__(self, augend_bits: str, addend_bits: str) -> None:
         """
+        Initialize the ripple-carry adder with two bitstrings.
+
         Parameters
         ----------
         augend_bits : str
@@ -41,6 +43,8 @@ class RippleCarryAdder(BaseAlgorithm):
         self.augend_bits = augend_bits
         self.addend_bits = addend_bits
         self.num_bits = len(augend_bits)
+
+        self._custom_gates = [MajorityGate(), UnmajorityGate()]
 
     def _build(self, measurement: MeasurementMode) -> QuantumCircuit:
         carry_in = QuantumRegister(1, "c_in")
@@ -100,14 +104,10 @@ class RippleCarryAdder(BaseAlgorithm):
 
 
 class MajorityGate(Gate):
-    """
-    Majority gate used to compute carry bits in ripple-carry addition.
-    """
+    """Majority gate used to compute carry bits in ripple-carry addition."""
 
     def __init__(self) -> None:
-        """
-        Initialize a 3-qubit majority gate.
-        """
+        """Initialize a 3-qubit majority gate."""
         super().__init__("majority", 3, [])
 
     def _define(self) -> None:
@@ -120,14 +120,10 @@ class MajorityGate(Gate):
 
 
 class UnmajorityGate(Gate):
-    """
-    Unmajority gate used to uncompute carry bits in ripple-carry addition.
-    """
+    """Unmajority gate used to uncompute carry bits in ripple-carry addition."""
 
     def __init__(self) -> None:
-        """
-        Initialize a 3-qubit unmajority gate.
-        """
+        """Initialize a 3-qubit unmajority gate."""
         super().__init__("unmajority", 3, [])
 
     def _define(self) -> None:

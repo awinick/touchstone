@@ -39,6 +39,5 @@ def test_measurement_mode() -> None:
 )
 def test_circuit_distribution(hidden_string: str) -> None:
     """Test the Bernstein-Vazirani circuit for various hidden strings."""
-    shots = 10
-    circuit = BernsteinVazirani(hidden_string).build()
-    assert simulate_counts(circuit, shots) == {hidden_string: shots}
+    algorithm = BernsteinVazirani(hidden_string)
+    assert simulate_counts(algorithm.build(), 1) == algorithm.distribution()

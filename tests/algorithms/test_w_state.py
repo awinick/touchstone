@@ -22,10 +22,6 @@ def test_measurement_mode() -> None:
 @pytest.mark.parametrize("num_qubits", [3, 4, 5, 6])
 def test_circuit_distribution(num_qubits: int) -> None:
     """Test the W State circuit output distribution."""
-    circuit = WState(num_qubits).build(measurement=MeasurementMode.NONE)
-    distribution = simulate_distribution(circuit)
-    expected_distribution = {
-        i * "0" + "1" + (num_qubits - 1 - i) * "0": 1 / num_qubits for i in range(num_qubits)
-    }
-
-    assert_distributions_close(distribution, expected_distribution)
+    algorithm = WState(num_qubits)
+    circuit = algorithm.build(measurement=MeasurementMode.NONE)
+    assert_distributions_close(simulate_distribution(circuit), algorithm.distribution())
