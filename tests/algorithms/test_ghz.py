@@ -2,7 +2,7 @@
 
 import pytest
 
-from tests.utilities import normalize_counts, simulate_counts, variational_distance
+from tests.utilities import assert_distributions_close, simulate_distribution
 from touchstone.algorithms.base_algorithm import MeasurementMode
 from touchstone.algorithms.ghz import GHZ
 
@@ -15,20 +15,18 @@ def test_ghz_must_be_greater_than() -> None:
 
 def test_measurement_mode() -> None:
     """Test that the circuit has no measurement."""
-    circuit = GHZ(3).build(measurement=MeasurementMode.NONE)
-    assert circuit.count_ops().get("measure", 0) == 0
+    circuit = GHZ(3).build()
+    assert circuit.count_ops().get("measure") == 3
 
 
 @pytest.mark.parametrize("num_qubits", [2, 3, 4])
 def test_ghz_output_distribution(num_qubits: int) -> None:
     """Test the GHZ circuit output distribution for various qubit counts."""
-    circuit = GHZ(num_qubits).build()
-
-    noisy_distribution = normalize_counts(simulate_counts(circuit, shots=4096))
-    ideal_distribution = {
+    circuit = GHZ(num_qubits).build(measurement=MeasurementMode.NONE)
+    distribution = simulate_distribution(circuit)
+    expected_distribution = {
         "0" * num_qubits: 0.5,
         "1" * num_qubits: 0.5,
     }
 
-    assert set(noisy_distribution.keys()) == set(ideal_distribution.keys())
-    assert variational_distance(noisy_distribution, ideal_distribution) < 0.1
+    assert_distributions_close(distribution, expected_distribution)

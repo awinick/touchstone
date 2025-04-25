@@ -17,18 +17,20 @@
 
 Most quantum benchmarking tools today are either overly academic or painfully inflexible. Touchstone is a fresh take on what circuit benchmarking should be:
 
-- Built for experimentation, not just file dumping
-- Minimal or highly configurable — and everything in between
-- Modular circuit construction with intuitive tags and filters
-- Ready for real benchmarking workflows, from transpiler evaluation to device performance tracking
+- **Built for experimentation**, not just file dumping
+- **Minimal or highly configurable** — and everything in-between
+- **Modular circuit construction** with intuitive tags and filters
+- **Ready for real benchmarking** workflows, from transpiler evaluation to device performance tracking
 
 ### Example Usage
 
 ```python
 import touchstone as ts
 
+# Filter the list of algorithms by tags
 algorithms = ts.filter_algorithms(ts.tag.SIMULABLE, ts.tag.DETERMINISTIC)
 
+# Instantiate circuits within a qubit range
 algorithm_instances = ts.instantiate_by(
     algorithms,
     min_num_qubits = 4,

@@ -12,6 +12,7 @@ from .base_algorithm import BaseAlgorithm, MeasurementMode
 from .bernstein_vazirani import BernsteinVazirani
 from .ghz import GHZ
 from .ripple_carry_adder import RippleCarryAdder
+from .w_state import WState
 
 __all__ = [
     "BaseAlgorithm",
@@ -19,4 +20,5 @@ __all__ = [
     "BernsteinVazirani",
     "GHZ",
     "RippleCarryAdder",
+    "WState",
 ]

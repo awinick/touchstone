@@ -3,6 +3,35 @@
 import numpy as np
 from qiskit.circuit import QuantumCircuit
 from qiskit.primitives import StatevectorSampler
+from qiskit.quantum_info import Statevector
+
+
+def simulate_distribution(
+    circuit: QuantumCircuit,
+    tolerance: float = 1e-10,
+) -> dict:
+    """
+    Simulate the quantum circuit and return the statevector.
+
+    Parameters
+    ----------
+    circuit : QuantumCircuit
+        The quantum circuit to simulate.
+
+    Returns
+    -------
+    dict
+        A dictionary where the keys are bitstrings and the values are the amplitudes.
+    """
+    initial_state = Statevector.from_int(0, circuit.num_qubits * (2,))
+    final_state = initial_state.evolve(circuit)
+    raw_distribution = final_state.probabilities_dict()
+
+    return {
+        str(bitstring): np.real(amplitude)
+        for bitstring, amplitude in raw_distribution.items()
+        if np.abs(amplitude) > tolerance
+    }
 
 
 def simulate_counts(
@@ -77,3 +106,30 @@ def variational_distance(p: dict[str, float], q: dict[str, float]) -> float:
     """
     keys = set(p) | set(q)
     return 0.5 * sum(abs(p.get(key, 0) - q.get(key, 0)) for key in keys)
+
+
+def assert_distributions_close(
+    p: dict[str, float],
+    q: dict[str, float],
+    tolerance: float = 1e-10,
+) -> None:
+    """
+    Assert that two probability distributions are close to each other.
+
+    Parameters
+    ----------
+    p : dict[str, float]
+        The first probability distribution.
+
+    q : dict[str, float]
+        The second probability distribution.
+
+    tolerance : float
+        The tolerance for closeness.
+
+    Raises
+    ------
+    AssertionError
+        If the variational distance between the two distributions is greater than the tolerance.
+    """
+    assert variational_distance(p, q) < tolerance
