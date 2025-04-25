@@ -37,7 +37,7 @@ def test_measurement_mode() -> None:
         "1100",
     ],
 )
-def test_circuit_correctness(hidden_string: str) -> None:
+def test_circuit_distribution(hidden_string: str) -> None:
     """Test the Bernstein-Vazirani circuit for various hidden strings."""
     shots = 10
     circuit = BernsteinVazirani(hidden_string).build()

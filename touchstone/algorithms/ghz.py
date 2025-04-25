@@ -8,11 +8,17 @@ from touchstone.algorithms.base_algorithm import BaseAlgorithm, MeasurementMode
 
 
 class GHZ(BaseAlgorithm):
-    """
+    r"""
     Algorithm for preparing a GHZ (Greenberger-Horne-Zeilinger) state.
 
-    Applies a Hadamard gate to the first qubit followed by a chain of CNOT gates to entangle all
-    qubits.
+    The GHZ state is defined as:
+
+    $$
+    \ket{\text{GHZ}} = \frac{1}{\sqrt{2}} \left( \ket{0}^{\otimes n} + \ket{1}^{\otimes n} \right)
+    $$
+
+    The state is also known as a **Cat state**, referring to a superposition of macroscopically
+    distinct classical states.
     """
 
     def __init__(self, num_qubits: int):

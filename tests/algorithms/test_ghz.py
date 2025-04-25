@@ -7,7 +7,7 @@ from touchstone.algorithms.base_algorithm import MeasurementMode
 from touchstone.algorithms.ghz import GHZ
 
 
-def test_ghz_must_be_greater_than() -> None:
+def test_must_be_greater_than() -> None:
     """Test that the number of qubits is >= 2."""
     with pytest.raises(ValueError, match="integer >= 2"):
         GHZ(1)
@@ -20,8 +20,8 @@ def test_measurement_mode() -> None:
 
 
 @pytest.mark.parametrize("num_qubits", [2, 3, 4])
-def test_ghz_output_distribution(num_qubits: int) -> None:
-    """Test the GHZ circuit output distribution for various qubit counts."""
+def test_circuit_distribution(num_qubits: int) -> None:
+    """Test the GHZ circuit output distribution."""
     circuit = GHZ(num_qubits).build(measurement=MeasurementMode.NONE)
     distribution = simulate_distribution(circuit)
     expected_distribution = {

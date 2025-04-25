@@ -7,7 +7,7 @@ from touchstone.algorithms.base_algorithm import MeasurementMode
 from touchstone.algorithms.w_state import WState
 
 
-def test_ghz_must_be_greater_than() -> None:
+def test_must_be_greater_than() -> None:
     """Test that the number of qubits is >= 3."""
     with pytest.raises(ValueError, match="integer >= 3"):
         WState(1)
@@ -20,7 +20,7 @@ def test_measurement_mode() -> None:
 
 
 @pytest.mark.parametrize("num_qubits", [3, 4, 5, 6])
-def test_w_state_output_distribution(num_qubits: int) -> None:
+def test_circuit_distribution(num_qubits: int) -> None:
     """Test the W State circuit output distribution."""
     circuit = WState(num_qubits).build(measurement=MeasurementMode.NONE)
     distribution = simulate_distribution(circuit)

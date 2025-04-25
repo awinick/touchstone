@@ -35,7 +35,7 @@ def test_measurement_mode() -> None:
         ("11111", "11111", "111110"),
     ],
 )
-def test_ripple_carry_adder_circuit(augend_bits: str, addend_bits: str, expected_sum: str) -> None:
+def test_circuit_distribution(augend_bits: str, addend_bits: str, expected_sum: str) -> None:
     """Test the ripple-carry adder circuit for various bitstrings."""
     shots = 1024
     circuit = RippleCarryAdder(augend_bits, addend_bits).build()

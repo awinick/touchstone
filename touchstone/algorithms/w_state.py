@@ -9,10 +9,16 @@ from touchstone.algorithms.base_algorithm import BaseAlgorithm, MeasurementMode
 
 
 class WState(BaseAlgorithm):
-    """
+    r"""
     Algorithm for preparing a W state.
 
-    The W state is a superposition of all basis states with Hamming weight one.
+    The W state is a superposition of all basis states with Hamming weight one and is defined as:
+
+    $$
+    \ket{\text{W}} = \frac{1}{\sqrt{n}}
+    (\ket{100\dots 0} + \ket{010\dots 0} + \cdots + \ket{000\dots 1})
+    $$
+
     It is robust against qubit loss and represents a distinct class of entanglement.
     """
 
