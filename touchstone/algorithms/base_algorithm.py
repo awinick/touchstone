@@ -1,4 +1,9 @@
-"""Base class for quantum algorithms."""
+"""
+Base class for canonical quantum algorithms.
+
+Defines the interface and lifecycle for constructing quantum circuits in a modular and
+consistent manner.
+"""
 
 from abc import ABC, abstractmethod
 from enum import Enum
@@ -27,17 +32,21 @@ class MeasurementMode(Enum):
 
 class BaseAlgorithm(ABC):
     """
-    Abstract base class for canonical quantum algorithms.
+    Abstract base class for quantum algorithm definitions.
 
-    Provides a standard interface for building algorithms and their associated circuits.
+    Provides a standardized interface for defining canonical quantum circuits
+    used in benchmarking.
     """
 
     def __init__(self, name: str, num_qubits: int):
         """
+        Initialize the algorithm with a name and number of qubits.
+
         Parameters
         ----------
         name : str
             Name of the algorithm.
+
         num_qubits : int
             Total number of qubits used.
         """
@@ -52,12 +61,16 @@ class BaseAlgorithm(ABC):
         """
         Construct the circuit implementing the algorithm.
 
+        This method wraps the subclass-defined `_build()` method and optionally
+        applies global measurement and decomposition logic.
+
         Parameters
         ----------
         measurement : MeasurementMode
             Controls how measurement operations are applied to the circuit.
+
         decompose : bool
-            If `decompose` is True, the circuit will be decomposed into standard gates.
+            If True, decomposes the circuit into standard gates.
 
         Returns
         -------
@@ -74,9 +87,10 @@ class BaseAlgorithm(ABC):
     @abstractmethod
     def _build(self, measurement: MeasurementMode) -> QuantumCircuit:
         """
-        Constructs the core quantum circuit.
+        Construct the core circuit for the algorithm.
 
-        This method defines the algorithm and may apply measurement if the mode is set to DEFAULT.
+        Subclasses must implement this method to define the algorithm logic.
+        Measurements should be applied here only if `measurement == DEFAULT`.
 
         Parameters
         ----------

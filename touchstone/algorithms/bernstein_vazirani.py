@@ -19,8 +19,6 @@ class BernsteinVazirani(BaseAlgorithm):
 
     def __init__(self, hidden_string: str):
         """
-        Initialize the Bernstein-Vazirani algorithm with a given hidden bitstring.
-
         Parameters
         ----------
         hidden_string : str
@@ -39,19 +37,6 @@ class BernsteinVazirani(BaseAlgorithm):
         self.hidden_string = hidden_string
 
     def _build(self, measurement: MeasurementMode) -> QuantumCircuit:
-        """
-        Construct the quantum circuit implementing the Bernstein-Vazirani algorithm.
-
-        Parameters
-        ----------
-        measurement : MeasurementMode
-            Measurement mode to apply during circuit construction.
-
-        Returns
-        -------
-        QuantumCircuit
-            Circuit implementing the Bernstein-Vazirani algorithm.
-        """
         circuit = QuantumCircuit(self.num_qubits + 1, self.num_qubits)
 
         # Put the ancilla qubit in the |1> state

@@ -18,8 +18,10 @@ def simulate_counts(
     ----------
     circuit : QuantumCircuit
         The quantum circuit to simulate.
+
     shots : int
         The number of shots (repetitions) for the simulation.
+
     seed : np.random.Generator | int | None
         Random seed for reproducibility. If None, a random seed is used.
         If an integer is provided, it is used as the seed for the random number generator.
@@ -64,6 +66,7 @@ def variational_distance(p: dict[str, float], q: dict[str, float]) -> float:
     ----------
     p : dict[str, float]
         The first probability distribution.
+
     q : dict[str, float]
         The second probability distribution.
 
