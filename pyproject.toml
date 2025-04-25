@@ -20,6 +20,13 @@ black = "^24.10.0"
 pytest = "^8.3.4"
 coverage = "^7.8.0"
 
+[tool.poetry.group.docs.dependencies]
+mkdocs = "^1.6.1"
+mkdocs-material = "^9.6.12"
+pymdown-extensions = "^10.14.3"
+mkdocstrings = "^0.29.1"
+mkdocstrings-python = "^1.16.10"
+
 [tool.black]
 line-length = 100
 

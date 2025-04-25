@@ -22,7 +22,7 @@ jobs:
         run: pip install poetry
 
       - name: Install dependencies
-        run: poetry install
+        run: poetry install --with docs
 
       - name: Run Ruff
         run: poetry run ruff check .
@@ -34,3 +34,6 @@ jobs:
         run: |
           poetry run coverage run -m pytest
           poetry run coverage report
+
+      - name: Build Docs
+        run: poetry run mkdocs build --strict
