@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 Adam Winick
+#
+# SPDX-License-Identifier: Apache-2.0
+
 """W state preparation algorithm."""
 
 import numpy as np

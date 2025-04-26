@@ -7,7 +7,7 @@ _/ˈtəCHˌstōn/_ • _noun_
 >
 > **2.** a hard stone used to test the purity of gold or silver by the streak left on its surface.
 >
-> Touchstone isn’t a transpiler. It’s a measure.  
+> Touchstone isn’t a transpiler. It’s a measure.
 > We give you the stone. You decide what to do with it.
 
 **Touchstone** is a modern library for generating **structured quantum benchmarking circuits** focusing on clarity, composability, and usability.

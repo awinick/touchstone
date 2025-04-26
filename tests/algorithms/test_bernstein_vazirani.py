@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 Adam Winick
+#
+# SPDX-License-Identifier: Apache-2.0
+
 """Unit tests for the Bernstein-Vazirani algorithm."""
 
 import pytest
