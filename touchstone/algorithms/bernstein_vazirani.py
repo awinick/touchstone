@@ -6,7 +6,7 @@ Identifies a hidden bitstring using a single query to a phase oracle.
 
 from qiskit.circuit import QuantumCircuit
 
-from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution, MeasurementMode
+from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution
 
 
 class BernsteinVazirani(BaseAlgorithm, HasDistribution):
@@ -38,7 +38,7 @@ class BernsteinVazirani(BaseAlgorithm, HasDistribution):
 
         self.hidden_string = hidden_string
 
-    def _build(self, measurement: MeasurementMode) -> QuantumCircuit:
+    def _build(self) -> QuantumCircuit:
         circuit = QuantumCircuit(self.num_qubits + 1, self.num_qubits)
 
         # Put the ancilla qubit in the |1> state
@@ -60,8 +60,8 @@ class BernsteinVazirani(BaseAlgorithm, HasDistribution):
         for index in range(self.num_qubits):
             circuit.h(index)
 
-        if measurement == MeasurementMode.DEFAULT:
-            circuit.measure(range(self.num_qubits), range(self.num_qubits))
+        circuit.barrier(self.num_qubits)
+        circuit.measure(range(self.num_qubits), range(self.num_qubits))
 
         return circuit
 

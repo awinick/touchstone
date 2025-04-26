@@ -2,7 +2,7 @@
 
 from qiskit import QuantumCircuit
 
-from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution, MeasurementMode
+from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution
 
 
 class GHZ(BaseAlgorithm, HasDistribution):
@@ -38,7 +38,7 @@ class GHZ(BaseAlgorithm, HasDistribution):
 
         super().__init__("ghz", num_qubits)
 
-    def _build(self, measurement: MeasurementMode) -> QuantumCircuit:
+    def _build(self) -> QuantumCircuit:
         circuit = QuantumCircuit(self.num_qubits, name=self.name)
 
         circuit.h(0)
@@ -46,8 +46,7 @@ class GHZ(BaseAlgorithm, HasDistribution):
         for i in range(self.num_qubits - 1):
             circuit.cx(i, i + 1)
 
-        if measurement == MeasurementMode.DEFAULT:
-            circuit.measure_all()
+        circuit.measure_all()
 
         return circuit
 

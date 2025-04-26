@@ -7,7 +7,7 @@ Cuccaro et al., "A new quantum ripple-carry addition circuit", arXiv:quant-ph/04
 
 from qiskit.circuit import ClassicalRegister, Gate, QuantumCircuit, QuantumRegister
 
-from touchstone.algorithms.base_algorithm import BaseAlgorithm, MeasurementMode
+from touchstone.algorithms.base_algorithm import BaseAlgorithm
 
 
 class RippleCarryAdder(BaseAlgorithm):
@@ -44,9 +44,7 @@ class RippleCarryAdder(BaseAlgorithm):
         self.addend_bits = addend_bits
         self.num_bits = len(augend_bits)
 
-        self._custom_gates = [MajorityGate(), UnmajorityGate()]
-
-    def _build(self, measurement: MeasurementMode) -> QuantumCircuit:
+    def _build(self) -> QuantumCircuit:
         carry_in = QuantumRegister(1, "c_in")
         augend = QuantumRegister(self.num_bits, "a")
         addend = QuantumRegister(self.num_bits, "b")
@@ -63,6 +61,8 @@ class RippleCarryAdder(BaseAlgorithm):
         # Initialize the input registers with the bit strings
         apply_bitstring_to_circuit(circuit, augend, self.augend_bits[::-1])
         apply_bitstring_to_circuit(circuit, addend, self.addend_bits[::-1])
+
+        circuit.barrier()
 
         # Forward pass: compute carries using majority gates
         for i in range(self.num_bits):
@@ -90,17 +90,30 @@ class RippleCarryAdder(BaseAlgorithm):
                 ),
             )
 
-        if measurement == MeasurementMode.DEFAULT:
-            sum_register = ClassicalRegister(self.num_bits + 1, "sum")
-            circuit.add_register(sum_register)
+        sum_register = ClassicalRegister(self.num_bits + 1, "sum")
+        circuit.add_register(sum_register)
+        circuit.barrier()
 
-            # Measure each bit of the sum
-            for i in range(self.num_bits):
-                circuit.measure(addend[i], sum_register[i])
-            # Measure the final carry bit
-            circuit.measure(carry_out, sum_register[self.num_bits])
+        # Measure each bit of the sum
+        for i in range(self.num_bits):
+            circuit.measure(addend[i], sum_register[i])
+
+        # Measure the final carry bit
+        circuit.measure(carry_out, sum_register[self.num_bits])
 
         return circuit
+
+    @property
+    def _custom_gates(self) -> list[type[Gate]]:
+        """
+        List of custom gates used in the algorithm.
+
+        Returns
+        -------
+        list[Gate]
+            List of custom gates.
+        """
+        return [MajorityGate, UnmajorityGate]
 
 
 class MajorityGate(Gate):

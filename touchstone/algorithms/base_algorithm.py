@@ -6,28 +6,8 @@ consistent manner.
 """
 
 from abc import ABC, abstractmethod
-from enum import Enum
 
-from qiskit.circuit import QuantumCircuit
-
-
-class MeasurementMode(Enum):
-    """
-    Modes for applying measurement to a quantum circuit.
-
-    Attributes
-    ----------
-    NONE : MeasurementMode
-        Do not apply any measurements.
-    ALL : MeasurementMode
-        Measure all qubits in the circuit.
-    DEFAULT : MeasurementMode
-        Apply algorithm-defined measurements.
-    """
-
-    NONE = "none"
-    ALL = "measure_all"
-    DEFAULT = "default"
+from qiskit.circuit import Gate, QuantumCircuit
 
 
 class BaseAlgorithm(ABC):
@@ -55,7 +35,6 @@ class BaseAlgorithm(ABC):
 
     def build(
         self,
-        measurement: MeasurementMode = MeasurementMode.DEFAULT,
         decompose_custom: bool = True,
     ) -> QuantumCircuit:
         """
@@ -63,9 +42,6 @@ class BaseAlgorithm(ABC):
 
         Parameters
         ----------
-        measurement : MeasurementMode
-            Controls how measurement operations are applied to the circuit.
-
         decompose_custom : bool
             If True, decomposes the custom gates in the circuit into standard gates.
 
@@ -74,33 +50,36 @@ class BaseAlgorithm(ABC):
         QuantumCircuit
             The quantum circuit implementing the algorithm.
         """
-        circuit = self._build(measurement)
+        circuit = self._build()
 
-        if measurement == MeasurementMode.ALL:
-            circuit.measure_all()
-
-        if decompose_custom and hasattr(self, "_custom_gates"):
+        if decompose_custom and self._custom_gates:
             return circuit.decompose(self._custom_gates)
         return circuit
 
     @abstractmethod
-    def _build(self, measurement: MeasurementMode) -> QuantumCircuit:
+    def _build(self) -> QuantumCircuit:
         """
-        Construct the core circuit for the algorithm.
+        Construct the circuit implementing the algorithm.
 
         Subclasses must implement this method to define the algorithm logic.
-        Measurements should be applied here only if `measurement == DEFAULT`.
-
-        Parameters
-        ----------
-        measurement : MeasurementMode
-            The measurement mode to apply during circuit construction.
 
         Returns
         -------
         QuantumCircuit
             The constructed quantum circuit.
         """
+
+    @property
+    def _custom_gates(self) -> list[type[Gate]]:
+        """
+        List of custom gates used in the algorithm.
+
+        Returns
+        -------
+        list[type[Gate]]
+            A list of custom gate names.
+        """
+        return []
 
 
 class HasDistribution(ABC):

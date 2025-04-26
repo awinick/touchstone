@@ -3,7 +3,6 @@
 import pytest
 
 from tests.utilities import simulate_counts
-from touchstone.algorithms.base_algorithm import MeasurementMode
 from touchstone.algorithms.ripple_carry_adder import RippleCarryAdder
 
 
@@ -17,12 +16,6 @@ def test_bitstrings_must_have_equal_length() -> None:
     """Test that the bitstrings have equal length."""
     with pytest.raises(ValueError, match="equal length"):
         RippleCarryAdder("101", "11")
-
-
-def test_measurement_mode() -> None:
-    """Test that the circuit has no measurement."""
-    circuit = RippleCarryAdder("01", "10").build(measurement=MeasurementMode.NONE)
-    assert circuit.count_ops().get("measure", 0) == 0
 
 
 @pytest.mark.parametrize(

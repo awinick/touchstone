@@ -3,7 +3,7 @@
 import numpy as np
 from qiskit import QuantumCircuit
 
-from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution, MeasurementMode
+from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution
 
 
 class WState(BaseAlgorithm, HasDistribution):
@@ -39,7 +39,7 @@ class WState(BaseAlgorithm, HasDistribution):
 
         super().__init__("w_state", num_qubits)
 
-    def _build(self, measurement: MeasurementMode) -> QuantumCircuit:
+    def _build(self) -> QuantumCircuit:
         circuit = QuantumCircuit(self.num_qubits, name=self.name)
 
         # Flip the first qubit
@@ -56,8 +56,7 @@ class WState(BaseAlgorithm, HasDistribution):
         for i in range(self.num_qubits - 1):
             circuit.cx(i + 1, i)
 
-        if measurement == MeasurementMode.DEFAULT:
-            circuit.measure_all()
+        circuit.measure_all()
 
         return circuit
 
