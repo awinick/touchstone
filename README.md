@@ -45,7 +45,7 @@ ts.build(algorithm_instances, type=ts.QASM, dir="circuits")
 
 ## Installation
 
-Touchstone uses [Poetry documentation](https://python-poetry.org/docs/#installation) for dependency management and installation.
+Touchstone uses [Poetry](https://python-poetry.org/) for dependency management and installation.
 
 ### Requirements
 

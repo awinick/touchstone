@@ -11,7 +11,7 @@ consistent manner.
 
 from abc import ABC, abstractmethod
 
-from qiskit.circuit import Gate, QuantumCircuit
+from qiskit import QuantumCircuit
 
 
 class BaseAlgorithm(ABC):
@@ -74,13 +74,13 @@ class BaseAlgorithm(ABC):
         """
 
     @property
-    def _custom_gates(self) -> list[type[Gate]]:
+    def _custom_gates(self) -> list[str]:
         """
         List of custom gates used in the algorithm.
 
         Returns
         -------
-        list[type[Gate]]
+        list[str]
             A list of custom gate names.
         """
         return []

@@ -11,10 +11,10 @@ Cuccaro et al., "A new quantum ripple-carry addition circuit", arXiv:quant-ph/04
 
 from qiskit.circuit import ClassicalRegister, Gate, QuantumCircuit, QuantumRegister
 
-from touchstone.algorithms.base_algorithm import BaseAlgorithm
+from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution
 
 
-class RippleCarryAdder(BaseAlgorithm):
+class RippleCarryAdder(BaseAlgorithm, HasDistribution):
     """
     Ripple-carry adder using the Cuccaro majority/unmajority construction.
 
@@ -53,12 +53,14 @@ class RippleCarryAdder(BaseAlgorithm):
         augend = QuantumRegister(self.num_bits, "a")
         addend = QuantumRegister(self.num_bits, "b")
         carry_out = QuantumRegister(1, "c_out")
+        result = ClassicalRegister(self.num_bits + 1, "result")
 
         circuit = QuantumCircuit(
             carry_in,
             augend,
             addend,
             carry_out,
+            result,
             name=self.name,
         )
 
@@ -92,32 +94,42 @@ class RippleCarryAdder(BaseAlgorithm):
                     addend[i],
                     augend[i],
                 ),
+                copy=False,
             )
 
-        sum_register = ClassicalRegister(self.num_bits + 1, "sum")
-        circuit.add_register(sum_register)
+        # Measure the result
         circuit.barrier()
-
-        # Measure each bit of the sum
         for i in range(self.num_bits):
-            circuit.measure(addend[i], sum_register[i])
-
+            circuit.measure(addend[i], result[i])
         # Measure the final carry bit
-        circuit.measure(carry_out, sum_register[self.num_bits])
+        circuit.measure(carry_out, result[self.num_bits])
 
         return circuit
 
+    def distribution(self) -> dict[str, float]:
+        """
+        Return the distribution of measurement outcomes.
+
+        Returns
+        -------
+        dict[str, float]
+            A dictionary with the expected measurement outcomes and their probabilities.
+        """
+        result = bin(int(self.augend_bits, 2) + int(self.addend_bits, 2))[2:]
+        padded_result = result.zfill(self.num_bits + 1)
+        return {padded_result: 1.0}
+
     @property
-    def _custom_gates(self) -> list[type[Gate]]:
+    def _custom_gates(self) -> list[str]:
         """
         List of custom gates used in the algorithm.
 
         Returns
         -------
-        list[Gate]
-            List of custom gates.
+        list[str]
+            A list of custom gate names.
         """
-        return [MajorityGate, UnmajorityGate]
+        return [MajorityGate().name, UnmajorityGate().name]
 
 
 class MajorityGate(Gate):

@@ -6,7 +6,7 @@
 
 import pytest
 
-from tests.utilities import simulate_counts
+from tests.utilities import assert_custom_gate_decomposition, simulate_counts
 from touchstone.algorithms.ripple_carry_adder import RippleCarryAdder
 
 
@@ -22,18 +22,23 @@ def test_bitstrings_must_have_equal_length() -> None:
         RippleCarryAdder("101", "11")
 
 
+def test_custom_gate_decomposition() -> None:
+    """Test that the custom gates are decomposed."""
+    assert_custom_gate_decomposition(RippleCarryAdder("01", "01"))
+
+
 @pytest.mark.parametrize(
-    "augend_bits, addend_bits, expected_sum",
+    "augend_bits, addend_bits",
     [
-        ("00000", "00000", "000000"),
-        ("00001", "00001", "000010"),
-        ("00001", "00010", "000011"),
-        ("00011", "00110", "001001"),
-        ("11111", "11111", "111110"),
+        ("00000", "00000"),
+        ("00001", "00001"),
+        ("00001", "00010"),
+        ("00011", "00110"),
+        ("11111", "11111"),
     ],
 )
-def test_circuit_distribution(augend_bits: str, addend_bits: str, expected_sum: str) -> None:
+def test_circuit_distribution(augend_bits: str, addend_bits: str) -> None:
     """Test the ripple-carry adder circuit for various bitstrings."""
-    shots = 1024
-    circuit = RippleCarryAdder(augend_bits, addend_bits).build()
-    assert simulate_counts(circuit, shots) == {expected_sum: shots}
+    algorithm = RippleCarryAdder(augend_bits, addend_bits)
+    circuit = algorithm.build()
+    assert simulate_counts(circuit, 1) == algorithm.distribution()

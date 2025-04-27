@@ -32,5 +32,6 @@ extra_javascript:
 nav:
   - Home: index.md
   - Usage: usage.md
+  - Touchstone vs World: touchstone-vs-world.md
   - API Reference:
       - Algorithms: reference/touchstone.algorithms.md

@@ -37,7 +37,7 @@ class BernsteinVazirani(BaseAlgorithm, HasDistribution):
         """
         super().__init__("bernstein_vazirani", len(hidden_string))
 
-        if self.num_qubits == 0:
+        if self.num_qubits <= 0:
             raise ValueError("Hidden string must be non-empty.")
 
         self.hidden_string = hidden_string

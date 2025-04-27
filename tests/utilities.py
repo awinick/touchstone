@@ -9,6 +9,8 @@ from qiskit.circuit import QuantumCircuit
 from qiskit.primitives import StatevectorSampler
 from qiskit.quantum_info import Statevector
 
+from touchstone.algorithms.base_algorithm import BaseAlgorithm
+
 
 def simulate_distribution(
     circuit: QuantumCircuit,
@@ -138,3 +140,28 @@ def assert_distributions_close(
         If the variational distance between the two distributions is greater than the tolerance.
     """
     assert variational_distance(p, q) < tolerance
+
+
+def assert_custom_gate_decomposition(algorithm: BaseAlgorithm) -> None:
+    """
+    Assert that the custom gates in the algorithm are decomposed.
+
+    Parameters
+    ----------
+    algorithm : BaseAlgorithm
+        The algorithm to check for custom gate decomposition.
+
+    Raises
+    ------
+    AssertionError
+        If the custom gates are not decomposed.
+    """
+    custom_gate_names = set(algorithm._custom_gates)
+
+    assert len(custom_gate_names)
+
+    op_names = set(algorithm.build(decompose_custom=False).count_ops().keys())
+    assert custom_gate_names.issubset(op_names)
+
+    op_names = set(algorithm.build(decompose_custom=True).count_ops().keys())
+    assert op_names.isdisjoint(custom_gate_names)
