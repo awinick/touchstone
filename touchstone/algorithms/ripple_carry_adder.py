@@ -12,8 +12,10 @@ Cuccaro et al., "A new quantum ripple-carry addition circuit", arXiv:quant-ph/04
 from qiskit.circuit import ClassicalRegister, Gate, QuantumCircuit, QuantumRegister
 
 from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution
+from touchstone.metadata.tags import Tag, tagged
 
 
+@tagged(Tag.CLASSICAL_INPUT, Tag.SINGLE_OUTCOME_DISTRIBUTION)
 class RippleCarryAdder(BaseAlgorithm, HasDistribution):
     """
     Ripple-carry adder using the Cuccaro majority/unmajority construction.

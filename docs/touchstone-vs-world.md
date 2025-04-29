@@ -6,6 +6,8 @@ Use this page to see which structured assets Touchstone provides today, and what
 
 ## QED-C
 
+Last updated: April 27, 2025
+
 The [QC-App-Oriented-Benchmarks](https://github.com/SRI-International/QC-App-Oriented-Benchmarks) project, developed under the Quantum Economic Development Consortium (QED-C), defines a set of application-focused quantum algorithms and benchmark tasks.
 
 | Algorithm              | Covered? | Notes                                                                                                                                 |
@@ -28,12 +30,14 @@ The [QC-App-Oriented-Benchmarks](https://github.com/SRI-International/QC-App-Ori
 
 ## Supermarq
 
+Last updated: April 27, 2025
+
 [Supermarq](https://github.com/Infleqtion/client-superstaq/) is a suite of application-oriented benchmarks used to measure the performance of quantum computing systems.
 
 | Algorithm                 | Covered? | Notes                                                                                                                                     |
 | :------------------------ | :------- | :---------------------------------------------------------------------------------------------------------------------------------------- |
 | Bit Code                  | [ ]      | [TODO]                                                                                                                                    |
-| GHZ                       | [x]      |                                                                                                                                           |
+| GHZ State                 | [x]      |                                                                                                                                           |
 | Hamiltonian Simulation    | [ ]      | 1D TFIM for Molybdenum diselenide.                                                                                                        |
 | Mermin Bell               | [x]      | Touchstone provides circuits for GHZ state preparation. Support for simultaneous Mermin operator measurement and scoring is beyond scope. |
 | Phase Code                | [ ]      | [TODO]                                                                                                                                    |
@@ -43,29 +47,85 @@ The [QC-App-Oriented-Benchmarks](https://github.com/SRI-International/QC-App-Ori
 
 ## Open QBench
 
+Last updated: April 27, 2025
+
 [Open QBench](https://quantum.psnc.pl/openqbench/) provides raw QASM for a restricted set of circuits with a fixed width and depth for each benchmark.
 
-| Algorithm   | Covered? | Notes  |
-| :---------- | :------- | :----- |
-| Grover      | [ ]      | [TODO] |
-| QFT         | [ ]      | [TODO] |
-| VQE (UCCSD) | [ ]      | [TODO] |
-| QAOA (JSSP) | [ ]      | [TODO] |
-| QSVM        | [ ]      | [TODO] |
+| Algorithm   | Covered? | Notes                            |
+| :---------- | :------- | :------------------------------- |
+| Grover      | [ ]      | [TODO]                           |
+| QFT         | [x]      | Touchstone is more configurable. |
+| VQE (UCCSD) | [ ]      | [TODO]                           |
+| QAOA (JSSP) | [ ]      | [TODO]                           |
+| QSVM        | [ ]      | [TODO]                           |
 
 ## QPack
+
+Last updated: April 27, 2025
 
 [QPack](https://github.com/koenmesman/QPack) aims to set the standard for evaluating quantum-hardware and simulators, using meaningful metrics and practical applications.
 
 | Algorithm          | Covered? | Notes  |
 | :----------------- | :------- | :----- |
-| Dominating set     | [ ]      | [TODO] |
+| Dominating Set     | [ ]      | [TODO] |
 | Maxcut             | [ ]      | [TODO] |
-| Traveling salesman | [ ]      | [TODO] |
+| Traveling Salesman | [ ]      | [TODO] |
 
 ## MQT Bench
 
+Last updated: April 27, 2025
+
 [MQT Bench](https://github.com/munich-quantum-toolkit/bench) is a quantum circuit benchmark suite with cross-level support, i.e., providing the same benchmark algorithms for different abstraction levels throughout the quantum computing software stack.
+
+| Algorithm                  | Covered? | Notes                                        |
+| :------------------------- | :------- | :------------------------------------------- |
+| Amplitude Estimation       | [ ]      | [TODO]                                       |
+| Bernstein-Vazirani         | [x]      | Touchstone is more configurable.             |
+| Deutsch-Jozsa              | [ ]      | [TODO]                                       |
+| GHZ State                  | [x]      |                                              |
+| Graph State                | [ ]      | [TODO]                                       |
+| Grover                     | [ ]      | [TODO]                                       |
+| QAOA                       | [ ]      | [TODO]                                       |
+| QFT                        | [x]      | The benchmark here does not make much sense. |
+| QFT (entangled)            | [ ]      | Possibly beyond scope.                       |
+| QNN                        | [ ]      | [TODO]                                       |
+| Phase Estimation (exact)   | [ ]      | [TODO]                                       |
+| Phase Estimation (inexact) | [ ]      | [TODO]                                       |
+| Quark Cardinality          | [ ]      | [TODO]                                       |
+| Quark Copula               | [ ]      | [TODO]                                       |
+| Random Walk                | [ ]      | [TODO]                                       |
+| Random Circuit             | [ ]      | Not a meaningful algorithmic benchmark.      |
+| Shor                       | [ ]      | [TODO]                                       |
+| VQE Real Amplitude         | [ ]      | [TODO]                                       |
+| VQE SU(2)                  | [ ]      | [TODO]                                       |
+| VQE Two Local              | [ ]      | [TODO]                                       |
+| W State                    | [x]      |                                              |
+
+## NWQBench
+
+Last updated: April 28, 2025
+
+[NWQBench](https://github.com/pnnl/nwqbench) presents a large corpus of quantum benchmark routine generators, written in Python. These benchmarking schemes generated are compatible with the languages PyQuil, Q#, Qiskit, and Cirq.
+
+| Algorithm          | Covered? | Notes                                                                       |
+| :----------------- | :------- | :-------------------------------------------------------------------------- |
+| Adder              | [x]      | Touchstone is more configurable.                                            |
+| Bernstein-Vazirani | [x]      | Touchstone is more configurable.                                            |
+| Binary Welded Tree | [ ]      | [TODO]                                                                      |
+| Cat State          | [x]      | This is identical to GHZ state preparation.                                 |
+| CC                 | [ ]      | [TODO] What is this?                                                        |
+| GHZ State          | [x]      | They incorrectly have a Cat state module which yields an identical circuit. |
+| Grover             | [ ]      | [TODO]                                                                      |
+| HHL                | [ ]      | [TODO]                                                                      |
+| Ising              | [ ]      | [TODO]                                                                      |
+| Multiplier         | [ ]      | [TODO]                                                                      |
+| Square Root        | [ ]      | [TODO]                                                                      |
+| SAT                | [ ]      | [TODO]                                                                      |
+| W State            | [x]      |                                                                             |
+
+Need to finish this table....
+
+## Future Extensions
 
 Thoughts for future: [NWQBench](https://github.com/pnnl/nwqbench/) -> [QASMBench](https://github.com/pnnl/QASMBench)-> [Benchpress](https://github.com/Qiskit/benchpress/tree/main)
 

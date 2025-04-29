@@ -23,6 +23,27 @@ Most quantum benchmarking tools today are either overly academic or painfully in
 
 ## Example Usage
 
+Touchstone provides various levels of abstraction for constructing structured benchmarking circuits.
+
+### High level: Prebuilt collections.
+
+At the highest level Touchstone provides various collections of predefined algorithm instances.
+
+```python
+import touchstone as ts
+
+# Load the predefined dictionary of small benchmark instances
+algorithm_instances = ts.algorithm_collections.small_algorithms()
+
+# Option 1: Create a dictionary of Qiskit circuits
+circuits = ts.build(algorithm_instances)
+
+# Option 2: Save the circuits as QASM
+ts.build(algorithm_instances, type=ts.QASM, dir="circuits")
+```
+
+### Medium level: Tag-based filtering and constrained instantiation.
+
 ```python
 import touchstone as ts
 
@@ -40,10 +61,42 @@ algorithm_instances = ts.instantiate_by(
 circuits = ts.build(algorithm_instances)
 
 # Option 2: Save the circuits as QASM
-ts.build(algorithm_instances, type=ts.QASM, dir="circuits")
+ts.build(algorithm_instances, output_format=ts.QASM3, output_directory="circuits")
 ```
 
-## Installation
+### Low level: Manual algorithm configuration.
+
+At the lowest level...
+
+```python
+import touchstone as ts
+
+algorithm_instances = ts.to_dict([
+    ts.algorithms.GHZ(num_qubits=4),
+    ts.algorithms.GHZ(num_qubits=8),
+    ts.algorithms.RippleCarryAdder(augend_bits="011", addend_bits="101")
+])
+
+# Option 1: Create a dictionary of Qiskit circuits
+circuits = ts.build(algorithm_instances)
+
+# Option 2: Save the circuits as QASM
+ts.build(algorithm_instances, output_format=ts.QASM3, output_directory="circuits")
+```
+
+## Installation (Recommended)
+
+Touchstone requires **Python 3.11+**.
+
+It can be installed directly via `pip`:
+
+```shell
+pip install quantum-touchstone
+```
+
+This is the recommended method for most users.
+
+## Build from Source (Developers Only)
 
 Touchstone uses [Poetry](https://python-poetry.org/) for dependency management and installation.
 
@@ -52,7 +105,7 @@ Touchstone uses [Poetry](https://python-poetry.org/) for dependency management a
 - Python 3.11+
 - [Poetry installed](https://python-poetry.org/docs/#installation) (recommended)
 
-### Install Touchstone
+### Install Touchstone from source
 
 After installing Poetry, run:
 
@@ -71,3 +124,17 @@ To run tests and verify the installation:
 ```shell
 poetry run pytest
 ```
+
+## Contributing
+
+Contributions to Touchstone are welcome!
+
+If you find a bug, have a feature request, or want to add new benchmark algorithms, feel free to open an issue or submit a pull request.
+
+Touchstone prioritizes clarity, reproducibility, and structured development. Please follow the existing code style and testing practices.
+
+## License
+
+Touchstone is licensed under the [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
+You are free to use, modify, and distribute this software, subject to the terms of the license.

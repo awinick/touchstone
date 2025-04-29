@@ -13,6 +13,8 @@ from abc import ABC, abstractmethod
 
 from qiskit import QuantumCircuit
 
+from touchstone.metadata.tags import Tag
+
 
 class BaseAlgorithm(ABC):
     """
@@ -59,6 +61,20 @@ class BaseAlgorithm(ABC):
         if decompose_custom and self._custom_gates:
             return circuit.decompose(self._custom_gates)
         return circuit
+
+    @classmethod
+    def tags(cls) -> set[Tag]:
+        """
+        Return the tags associated with the algorithm.
+
+        Tags are used for filtering algorithms based on their properties.
+
+        Returns
+        -------
+        set[Tag]
+            A set of tags associated with the algorithm.
+        """
+        return getattr(cls, "_tags", set())
 
     @abstractmethod
     def _build(self) -> QuantumCircuit:

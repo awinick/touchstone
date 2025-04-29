@@ -16,8 +16,10 @@ from qiskit import QuantumCircuit
 from qiskit.circuit.library import QFTGate
 
 from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution
+from touchstone.metadata.tags import Tag, tagged
 
 
+@tagged(Tag.CLASSICAL_INPUT, Tag.SINGLE_OUTCOME_DISTRIBUTION)
 class OneHotIQFT(BaseAlgorithm, HasDistribution):
     """
     One-hot state preparation followed by an inverse QFT.

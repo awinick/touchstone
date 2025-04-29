@@ -7,8 +7,10 @@
 from qiskit import QuantumCircuit
 
 from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution
+from touchstone.metadata.tags import Tag, tagged
 
 
+@tagged(Tag.KNOWN_DISTRIBUTION)
 class GHZ(BaseAlgorithm, HasDistribution):
     r"""
     Algorithm for preparing a GHZ (Greenberger-Horne-Zeilinger) state.

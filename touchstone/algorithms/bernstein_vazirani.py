@@ -11,8 +11,10 @@ Identifies a hidden bitstring using a single query to a phase oracle.
 from qiskit.circuit import QuantumCircuit
 
 from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution
+from touchstone.metadata.tags import Tag, tagged
 
 
+@tagged(Tag.CLASSICAL_INPUT, Tag.SINGLE_OUTCOME_DISTRIBUTION)
 class BernsteinVazirani(BaseAlgorithm, HasDistribution):
     """
     Bernstein-Vazirani algorithm for recovering a hidden bitstring.
