@@ -47,7 +47,14 @@ def tagged(*tags: Tag) -> Callable[[T], T]:
     """
 
     def decorator(cls: T) -> T:
-        cls._tags = getattr(cls, "_tags", set()).union(tags)  # type: ignore[attr-defined]
+        tag_set = set(tags)
+
+        # Add parent tags if applicable
+        if Tag.SINGLE_OUTCOME_DISTRIBUTION in tags:
+            tag_set.add(Tag.KNOWN_DISTRIBUTION)
+
+        # Add the tags to the class
+        cls._tags = getattr(cls, "_tags", set()).union(tag_set)  # type: ignore[attr-defined]
         return cls
 
     return decorator

@@ -3,12 +3,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 """
-One-hot inverse Quantum Fourier Transform (IQFT) state preparation.
+One-hot Quantum Fourier Transform (QFT) state preparation.
 
-Prepares a basis state hidden by global phases and recovers it via inverse QFT,
-yielding a deterministic measurement.
-
-Reference: Generalized from standard QFT hidden shift techniques.
+Prepares the inverse-QFT state corresponding to a hidden basis bitstring,
+which is recovered deterministically by applying a forward QFT.
 """
 
 import numpy as np
@@ -20,17 +18,17 @@ from touchstone.metadata.tags import Tag, tagged
 
 
 @tagged(Tag.CLASSICAL_INPUT, Tag.SINGLE_OUTCOME_DISTRIBUTION)
-class OneHotIQFT(BaseAlgorithm, HasDistribution):
+class OneHotQFT(BaseAlgorithm, HasDistribution):
     """
-    One-hot state preparation followed by an inverse QFT.
+    One-hot basis state preparation followed by a QFT.
 
-    Recovers a hidden computational basis state by undoing applied phase rotations using the
-    inverse Quantum Fourier Transform.
+    Prepares the QFT encoding of a known classical bitstring, such that a forward QFT transforms
+    it into a deterministic computational basis state.
     """
 
     def __init__(self, hidden_string: str):
         """
-        Initialize the one-hot IQFT algorithm.
+        Initialize the one-hot QFT algorithm.
 
         Parameters
         ----------
@@ -42,7 +40,7 @@ class OneHotIQFT(BaseAlgorithm, HasDistribution):
         ValueError
             If the hidden string is empty.
         """
-        super().__init__("one_hot_iqft", len(hidden_string))
+        super().__init__("one_hot_qft", len(hidden_string))
 
         if self.num_qubits <= 0:
             raise ValueError("Hidden string must be non-empty.")
@@ -50,16 +48,16 @@ class OneHotIQFT(BaseAlgorithm, HasDistribution):
         self.hidden_string = hidden_string
 
     def _build(self) -> QuantumCircuit:
-        circuit = QuantumCircuit(self.num_qubits, name="one_hot_iqft")
+        circuit = QuantumCircuit(self.num_qubits, name=self.name)
 
         hidden_int = int(self.hidden_string, 2)
         for qubit in range(self.num_qubits):
             circuit.h(qubit)
-            circuit.p(hidden_int * np.pi / 2 ** (self.num_qubits - qubit - 1), qubit)
+            circuit.p(-hidden_int * np.pi / 2 ** (self.num_qubits - qubit - 1), qubit)
 
         circuit.barrier()
 
-        circuit.compose(QFTGate(self.num_qubits).inverse(), inplace=True, copy=False)
+        circuit.compose(QFTGate(self.num_qubits), inplace=True, copy=False)
 
         circuit.measure_all()
 
@@ -75,7 +73,7 @@ class OneHotIQFT(BaseAlgorithm, HasDistribution):
         list[str]
             A list of custom gate names.
         """
-        return ["qft_dg"]
+        return ["qft"]
 
     def distribution(self) -> dict[str, float]:
         """

@@ -141,3 +141,5 @@ HamLib will have some coverage, [Feynman](https://github.com/meamy/feynman) isn'
 
 [TKET Benchmarks](https://github.com/CQCL/tket_benchmarking)
 [AppQSim](https://arxiv.org/abs/2503.04298)
+
+[Source](https://arxiv.org/pdf/2503.04905) that lists a bunch of projects like this

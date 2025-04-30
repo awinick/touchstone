@@ -4,9 +4,7 @@
 
 """Utility functions."""
 
-import numpy as np
-from qiskit.circuit import QuantumCircuit
-from qiskit.primitives import StatevectorSampler
+from qiskit.circuit import Measure, QuantumCircuit
 from qiskit.quantum_info import Statevector
 
 from touchstone.algorithms.base_algorithm import BaseAlgorithm
@@ -15,83 +13,60 @@ from touchstone.algorithms.base_algorithm import BaseAlgorithm
 def simulate_distribution(
     circuit: QuantumCircuit,
     tolerance: float = 1e-10,
-) -> dict:
+) -> dict[str, float]:
     """
-    Simulate the quantum circuit and return the statevector.
+    Simulate a quantum circuit and return the marginal output distribution.
+
+    This function removes the measurements from the circuit and simulates
+    the circuit to obtain the marginal probability distribution of the
+    measured classical bits. The result is a dictionary mapping classical
+    bitstrings (as strings) to their corresponding output probabilities.
 
     Parameters
     ----------
     circuit : QuantumCircuit
-        The quantum circuit to simulate.
+        The input quantum circuit containing measurements.
 
-    Returns
-    -------
-    dict
-        A dictionary where the keys are bitstrings and the values are the amplitudes.
-    """
-    initial_state = Statevector.from_int(0, circuit.num_qubits * (2,))
-    final_state = initial_state.evolve(circuit)
-    raw_distribution = final_state.probabilities_dict()
-
-    return {
-        str(bitstring): np.real(amplitude)
-        for bitstring, amplitude in raw_distribution.items()
-        if np.abs(amplitude) > tolerance
-    }
-
-
-def simulate_counts(
-    circuit: QuantumCircuit,
-    shots: int = 10,
-    seed: np.random.Generator | int | None = 0,
-) -> dict:
-    """
-    Simulate the quantum circuit and return the counts of the measurement results.
-
-    The circuit is executed using a statevector simulator.
-
-    Parameters
-    ----------
-    circuit : QuantumCircuit
-        The quantum circuit to simulate.
-
-    shots : int
-        The number of shots (repetitions) for the simulation.
-
-    seed : np.random.Generator | int | None
-        Random seed for reproducibility. If None, a random seed is used.
-        If an integer is provided, it is used as the seed for the random number generator.
-
-    Returns
-    -------
-    dict
-        A dictionary where the keys are bitstrings and the values are the counts of each bitstring.
-    """
-    sampler = StatevectorSampler(seed=seed)
-    data = sampler.run([circuit], shots=shots).result()[0].data
-
-    if len(data.keys()) != 1:
-        raise ValueError("Expected only one result key.")
-
-    return data[list(data.keys())[0]].get_counts()
-
-
-def normalize_counts(counts: dict[str, int]) -> dict[str, float]:
-    """
-    Normalize the counts dictionary to convert counts to probabilities.
-
-    Parameters
-    ----------
-    counts : dict[str, int]
-        A dictionary where the keys are bitstrings and the values are the counts.
+    tolerance : float, optional
+        Minimum probability threshold to include in the result (default is 1e-10).
 
     Returns
     -------
     dict[str, float]
-        A dictionary where the values are the normalized probabilities.
+        A dictionary mapping classical bitstrings (as strings) to their
+        corresponding output probabilities.
     """
-    total = sum(counts.values())
-    return {bitstring: count / total for bitstring, count in counts.items()}
+    # Find measured qubit indices and corresponding classical bit indices
+    measurement_mapping = {
+        circuit.find_bit(instruction.qubits[0]).index: circuit.find_bit(instruction.clbits[0]).index
+        for instruction in circuit.data
+        if isinstance(instruction.operation, Measure)
+    }
+
+    qubit_index_list = list(measurement_mapping.keys())
+
+    # Remove the measurements from the circuit
+    circuit = circuit.remove_final_measurements(inplace=False)
+
+    # Simulate the circuit to get a marginal probability distribution
+    marginal_probabilities = Statevector.from_instruction(circuit).probabilities_dict(
+        qubit_index_list
+    )
+
+    result = {}
+    for bitstring, probability in marginal_probabilities.items():
+        if probability < tolerance:
+            continue
+
+        classical_bits = len(measurement_mapping) * ["0"]
+
+        # Map each measured qubit index to its classical bit index
+        for qubit_index, clbit_index in measurement_mapping.items():
+            classical_bits[clbit_index] = bitstring[qubit_index_list.index(qubit_index)]
+
+        result["".join(classical_bits)] = probability
+
+    return result
 
 
 def variational_distance(p: dict[str, float], q: dict[str, float]) -> float:

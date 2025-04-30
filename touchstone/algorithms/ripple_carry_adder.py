@@ -25,15 +25,15 @@ class RippleCarryAdder(BaseAlgorithm, HasDistribution):
     Reference: [Cuccaro et al. (2004)](https://arxiv.org/abs/quant-ph/0410184)
     """
 
-    def __init__(self, augend_bits: str, addend_bits: str) -> None:
+    def __init__(self, augend_string: str, addend_string: str) -> None:
         """
         Initialize the ripple-carry adder with two bitstrings.
 
         Parameters
         ----------
-        augend_bits : str
+        augend_string : str
             Bitstring representing the augend (left-hand operand).
-        addend_bits : str
+        addend_string : str
             Bitstring representing the addend (right-hand operand).
 
         Raises
@@ -41,14 +41,14 @@ class RippleCarryAdder(BaseAlgorithm, HasDistribution):
         ValueError
             If the bitstrings are empty or of unequal length.
         """
-        super().__init__("ripple_carry_adder", 2 * len(augend_bits) + 2)
+        super().__init__("ripple_carry_adder", 2 * len(augend_string) + 2)
 
-        if not augend_bits or len(augend_bits) != len(addend_bits):
+        if not augend_string or len(augend_string) != len(addend_string):
             raise ValueError("Bitstrings must be non-empty and of equal length.")
 
-        self.augend_bits = augend_bits
-        self.addend_bits = addend_bits
-        self.num_bits = len(augend_bits)
+        self.augend_bits = augend_string
+        self.addend_bits = addend_string
+        self.num_bits = len(augend_string)
 
     def _build(self) -> QuantumCircuit:
         carry_in = QuantumRegister(1, "c_in")

@@ -15,8 +15,9 @@ by the library.
 from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution
 from touchstone.algorithms.bernstein_vazirani import BernsteinVazirani
 from touchstone.algorithms.ghz import GHZ
-from touchstone.algorithms.one_hot_iqft import OneHotIQFT
+from touchstone.algorithms.one_hot_qft import OneHotQFT
 from touchstone.algorithms.ripple_carry_adder import RippleCarryAdder
+from touchstone.algorithms.swap_test import SwapTest
 from touchstone.algorithms.w_state import WState
 
 __all__ = [
@@ -26,7 +27,8 @@ __all__ = [
     # Algorithms
     "BernsteinVazirani",
     "GHZ",
-    "OneHotIQFT",
+    "OneHotQFT",
     "RippleCarryAdder",
+    "SwapTest",
     "WState",
 ]

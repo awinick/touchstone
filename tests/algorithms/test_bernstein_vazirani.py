@@ -6,7 +6,7 @@
 
 import pytest
 
-from tests.utilities import simulate_counts
+from tests.utilities import assert_distributions_close, simulate_distribution
 from touchstone.algorithms.bernstein_vazirani import BernsteinVazirani
 
 
@@ -34,4 +34,4 @@ def test_hidden_string_not_empty() -> None:
 def test_circuit_distribution(hidden_string: str) -> None:
     """Test the Bernstein-Vazirani circuit for various hidden strings."""
     algorithm = BernsteinVazirani(hidden_string)
-    assert simulate_counts(algorithm.build(), 1) == algorithm.distribution()
+    assert_distributions_close(simulate_distribution(algorithm.build()), algorithm.distribution())

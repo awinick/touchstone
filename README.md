@@ -33,13 +33,13 @@ At the highest level Touchstone provides various collections of predefined algor
 import touchstone as ts
 
 # Load the predefined dictionary of small benchmark instances
-algorithm_instances = ts.algorithm_collections.small_algorithms()
+instances = ts.algorithm_collections.small_algorithms()
 
 # Option 1: Create a dictionary of Qiskit circuits
-circuits = ts.build(algorithm_instances)
+circuits = ts.build(instances)
 
 # Option 2: Save the circuits as QASM
-ts.build(algorithm_instances, type=ts.QASM, dir="circuits")
+ts.build(instances, output_format=ts.QASM3, output_directory="circuits")
 ```
 
 ### Medium level: Tag-based filtering and constrained instantiation.
@@ -51,17 +51,17 @@ import touchstone as ts
 algorithms = ts.filter_algorithms(ts.Tag.SIMULABLE, ts.Tag.DETERMINISTIC)
 
 # Instantiate circuits within a qubit range
-algorithm_instances = ts.instantiate_by(
+instances = ts.instantiate_by(
     algorithms,
     min_qubits = 4,
     max_qubits = 50,
 )
 
 # Option 1: Create a dictionary of Qiskit circuits
-circuits = ts.build(algorithm_instances)
+circuits = ts.build(instances)
 
 # Option 2: Save the circuits as QASM
-ts.build(algorithm_instances, output_format=ts.QASM3, output_directory="circuits")
+ts.build(instances, output_format=ts.QASM3, output_directory="circuits")
 ```
 
 ### Low level: Manual algorithm configuration.
@@ -71,17 +71,17 @@ At the lowest level...
 ```python
 import touchstone as ts
 
-algorithm_instances = ts.to_dict([
+instances = ts.to_dict([
     ts.algorithms.GHZ(num_qubits=4),
     ts.algorithms.GHZ(num_qubits=8),
     ts.algorithms.RippleCarryAdder(augend_bits="011", addend_bits="101")
 ])
 
 # Option 1: Create a dictionary of Qiskit circuits
-circuits = ts.build(algorithm_instances)
+circuits = ts.build(instances)
 
 # Option 2: Save the circuits as QASM
-ts.build(algorithm_instances, output_format=ts.QASM3, output_directory="circuits")
+ts.build(instances, output_format=ts.QASM3, output_directory="circuits")
 ```
 
 ## Installation (Recommended)
