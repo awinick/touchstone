@@ -7,7 +7,7 @@
 import pytest
 
 from touchstone.algorithms.base_algorithm import BaseAlgorithm
-from touchstone.metadata.fitering import filter_algorithms
+from touchstone.metadata.fitering import filter_algorithms, instantiate_by
 from touchstone.metadata.tags import Tag
 
 
@@ -22,3 +22,11 @@ def test_filter_no_tags() -> None:
     algorithms = filter_algorithms()
     assert len(algorithms) > 0
     assert all(issubclass(algorithm, BaseAlgorithm) for algorithm in algorithms)
+
+
+def test_instantiate_by() -> None:
+    """Test that instantiate_by returns the correct algorithm class."""
+    all_algorithms = filter_algorithms()
+
+    for algorithm in all_algorithms:
+        instantiate_by(algorithm, min_qubits=2, max_qubits=5)

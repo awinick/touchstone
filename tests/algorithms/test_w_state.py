@@ -16,6 +16,13 @@ def test_must_be_greater_than() -> None:
         WState(1)
 
 
+def test_from_random_incorrect_num_qubits() -> None:
+    """Test that from_random raises an error for incorrect number of qubits."""
+    # TODO We might want to move this to the base algorithm test file
+    with pytest.raises(ValueError, match="Invalid number of qubits 1 for WState"):
+        WState.from_random(1)
+
+
 @pytest.mark.parametrize("num_qubits", [3, 4, 5, 6])
 def test_circuit_distribution(num_qubits: int) -> None:
     """Test the W State circuit output distribution."""

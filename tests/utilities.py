@@ -26,7 +26,6 @@ def simulate_distribution(
     ----------
     circuit : QuantumCircuit
         The input quantum circuit containing measurements.
-
     tolerance : float, optional
         Minimum probability threshold to include in the result (default is 1e-10).
 
@@ -77,7 +76,6 @@ def variational_distance(p: dict[str, float], q: dict[str, float]) -> float:
     ----------
     p : dict[str, float]
         The first probability distribution.
-
     q : dict[str, float]
         The second probability distribution.
 
@@ -102,7 +100,6 @@ def assert_distributions_close(
     ----------
     p : dict[str, float]
         The first probability distribution.
-
     q : dict[str, float]
         The second probability distribution.
 

@@ -46,3 +46,29 @@ def filter_algorithms(
         if include_set.issubset(algorithm_cls.tags())
         and exclude_set.isdisjoint(algorithm_cls.tags())
     ]
+
+
+def instantiate_by(
+    algorithm_class: type[BaseAlgorithm],
+    min_qubits: int = 2,
+    max_qubits: int = 20,
+) -> dict[int, BaseAlgorithm]:
+    """
+    Instantiate a dictionary of algorithms with random construction.
+
+    Parameters
+    ----------
+    algorithm_class : type[BaseAlgorithm]
+        The class of the algorithm to instantiate.
+    min_qubits : int
+        The minimum number of qubits for the algorithm.
+    max_qubits : int
+        The maximum number of qubits for the algorithm.
+
+    Returns
+    -------
+    dict[str, BaseAlgorithm]
+        A dictionary mapping the number of qubits to the instantiated algorithm.
+    """
+    valid_widths = algorithm_class.filter_circuit_widths(list(range(min_qubits, max_qubits + 1)))
+    return {width: algorithm_class.from_random(width) for width in valid_widths}

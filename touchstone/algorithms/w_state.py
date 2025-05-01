@@ -4,6 +4,8 @@
 
 """W state preparation algorithm."""
 
+from __future__ import annotations
+
 import numpy as np
 from qiskit import QuantumCircuit
 
@@ -44,6 +46,14 @@ class WState(BaseAlgorithm, HasDistribution):
             raise ValueError("Number of qubits must be an integer >= 3.")
 
         super().__init__("w_state", num_qubits)
+
+    @classmethod
+    def _from_random(cls, num_qubits: int, _rng: np.random.Generator) -> WState:
+        return cls(num_qubits)
+
+    @staticmethod
+    def _is_num_qubits_valid(num_qubits: int) -> bool:
+        return num_qubits >= 3
 
     def _build(self) -> QuantumCircuit:
         circuit = QuantumCircuit(self.num_qubits, name=self.name)

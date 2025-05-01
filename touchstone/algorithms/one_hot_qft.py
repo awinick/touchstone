@@ -9,6 +9,8 @@ Prepares the inverse-QFT state corresponding to a hidden basis bitstring,
 which is recovered deterministically by applying a forward QFT.
 """
 
+from __future__ import annotations
+
 import numpy as np
 from qiskit import QuantumCircuit
 from qiskit.circuit.library import QFTGate
@@ -46,6 +48,15 @@ class OneHotQFT(BaseAlgorithm, HasDistribution):
             raise ValueError("Hidden string must be non-empty.")
 
         self.hidden_string = hidden_string
+
+    @classmethod
+    def _from_random(cls, num_qubits: int, rng: np.random.Generator) -> OneHotQFT:
+        hidden_string = "".join(rng.choice(["0", "1"]) for _ in range(num_qubits))
+        return cls(hidden_string)
+
+    @staticmethod
+    def _is_num_qubits_valid(num_qubits: int) -> bool:
+        return num_qubits >= 1
 
     def _build(self) -> QuantumCircuit:
         circuit = QuantumCircuit(self.num_qubits, name=self.name)

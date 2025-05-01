@@ -8,6 +8,8 @@ swap test algorithm.
 An algorithm used to determine the fidelity between two quantum states.
 """
 
+from __future__ import annotations
+
 from typing import Sequence
 
 import numpy as np
@@ -56,6 +58,19 @@ class SwapTest(BaseAlgorithm, HasDistribution):
             raise ValueError("Angles arrays must have the same shape.")
 
         super().__init__("swap_test", 2 * self.angles1.shape[0] + 1)
+
+    @classmethod
+    def _from_random(cls, num_qubits: int, rng: np.random.Generator) -> SwapTest:
+        num_state_qubits = (num_qubits - 1) // 2
+
+        angles1 = rng.uniform(0, 2 * np.pi, size=(num_state_qubits, 3)).tolist()
+        angles2 = rng.uniform(0, 2 * np.pi, size=(num_state_qubits, 3)).tolist()
+
+        return cls(angles1, angles2)
+
+    @staticmethod
+    def _is_num_qubits_valid(num_qubits: int) -> bool:
+        return num_qubits % 2 == 1 and num_qubits >= 3
 
     def _build(self) -> QuantumCircuit:
         state_qubit_count = self.angles1.shape[0]

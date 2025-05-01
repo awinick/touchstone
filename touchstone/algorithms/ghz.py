@@ -4,6 +4,9 @@
 
 """Greenberger-Horne-Zeilinger (GHZ) state preparation algorithm."""
 
+from __future__ import annotations
+
+import numpy as np
 from qiskit import QuantumCircuit
 
 from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution
@@ -43,6 +46,14 @@ class GHZ(BaseAlgorithm, HasDistribution):
             raise ValueError("Number of qubits must be an integer >= 2.")
 
         super().__init__("ghz", num_qubits)
+
+    @classmethod
+    def _from_random(cls, num_qubits: int, _rng: np.random.Generator) -> GHZ:
+        return cls(num_qubits)
+
+    @staticmethod
+    def _is_num_qubits_valid(num_qubits: int) -> bool:
+        return num_qubits >= 2
 
     def _build(self) -> QuantumCircuit:
         circuit = QuantumCircuit(self.num_qubits, name=self.name)

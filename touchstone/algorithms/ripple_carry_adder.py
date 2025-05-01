@@ -9,6 +9,9 @@ Implements the reversible adder from:
 Cuccaro et al., "A new quantum ripple-carry addition circuit", arXiv:quant-ph/0410184.
 """
 
+from __future__ import annotations
+
+import numpy as np
 from qiskit.circuit import ClassicalRegister, Gate, QuantumCircuit, QuantumRegister
 
 from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution
@@ -49,6 +52,19 @@ class RippleCarryAdder(BaseAlgorithm, HasDistribution):
         self.augend_bits = augend_string
         self.addend_bits = addend_string
         self.num_bits = len(augend_string)
+
+    @classmethod
+    def _from_random(cls, num_qubits: int, rng: np.random.Generator) -> RippleCarryAdder:
+        num_bits = (num_qubits - 2) // 2
+
+        augend_string = "".join(rng.choice(["0", "1"]) for _ in range(num_bits))
+        addend_string = "".join(rng.choice(["0", "1"]) for _ in range(num_bits))
+
+        return cls(augend_string, addend_string)
+
+    @staticmethod
+    def _is_num_qubits_valid(num_qubits: int) -> bool:
+        return num_qubits % 2 == 0 and num_qubits >= 4
 
     def _build(self) -> QuantumCircuit:
         carry_in = QuantumRegister(1, "c_in")
