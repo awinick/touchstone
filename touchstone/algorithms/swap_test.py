@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 """
-swap test algorithm.
+Swap test algorithm.
 
 An algorithm used to determine the fidelity between two quantum states.
 """
@@ -125,13 +125,10 @@ class SwapTest(BaseAlgorithm, HasDistribution):
         phi2 = self.angles2[:, 1]
 
         fidelity = np.prod(
-            0.5
-            * (
-                1
-                + np.cos(theta1) * np.cos(theta2)
-                + np.cos(phi1 - phi2) * np.sin(theta1) * np.sin(theta2)
-            )
-        )
+            1
+            + np.cos(theta1) * np.cos(theta2)
+            + np.cos(phi1 - phi2) * np.sin(theta1) * np.sin(theta2)
+        ) / (1 << len(theta1))
 
         return {
             "0": (1 + fidelity) / 2,

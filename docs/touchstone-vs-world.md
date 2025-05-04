@@ -15,7 +15,7 @@ The [QC-App-Oriented-Benchmarks](https://github.com/SRI-International/QC-App-Ori
 | Amplitude Estimation   | [x]      | Touchstone is more configurable.                                                                                                      |
 | Bernstein-Vazirani     | [x]      | Touchstone is more configurable.                                                                                                      |
 | Deutsch-Jozsa          | [ ]      | [TODO]                                                                                                                                |
-| Grover                 | [ ]      | [TODO]                                                                                                                                |
+| Grover                 | [x]      | Touchstone is more configurable.                                                                                                      |
 | Hamiltonian Simulation | [ ]      | They just do Heisenberg model with disordered fields and the Transverse Field Ising Model (TFIM), both with open boundary conditions. |
 | Hamlib                 | [ ]      | See Hamlib. They only do a tiny subset.                                                                                               |
 | HHL                    | [ ]      | [TODO]                                                                                                                                |
@@ -39,7 +39,7 @@ Last updated: April 27, 2025
 | Bit Code                  | [ ]      | [TODO]                                                                                                                                    |
 | GHZ State                 | [x]      |                                                                                                                                           |
 | Hamiltonian Simulation    | [ ]      | 1D TFIM for Molybdenum diselenide.                                                                                                        |
-| Mermin Bell               | [x]      | Touchstone provides circuits for GHZ state preparation. Support for simultaneous Mermin operator measurement and scoring is beyond scope. |
+| Mermin Bell               | [-]      | Touchstone provides circuits for GHZ state preparation. Support for simultaneous Mermin operator measurement and scoring is beyond scope. |
 | Phase Code                | [ ]      | [TODO]                                                                                                                                    |
 | QAOA Fermionic Swap Proxy | [ ]      | Need to read more. [TODO]                                                                                                                 |
 | QAOA Vanilla Proxy        | [ ]      | MaxCut on a Sherrington-Kirkpatrick (SK) model. [TODO]                                                                                    |
@@ -53,7 +53,7 @@ Last updated: April 27, 2025
 
 | Algorithm   | Covered? | Notes                            |
 | :---------- | :------- | :------------------------------- |
-| Grover      | [ ]      | [TODO]                           |
+| Grover      | [x]      | Touchstone is more configurable. |
 | QFT         | [x]      | Touchstone is more configurable. |
 | VQE (UCCSD) | [ ]      | [TODO]                           |
 | QAOA (JSSP) | [ ]      | [TODO]                           |
@@ -77,29 +77,29 @@ Last updated: April 27, 2025
 
 [MQT Bench](https://github.com/munich-quantum-toolkit/bench) is a quantum circuit benchmark suite with cross-level support, i.e., providing the same benchmark algorithms for different abstraction levels throughout the quantum computing software stack.
 
-| Algorithm                  | Covered? | Notes                                        |
-| :------------------------- | :------- | :------------------------------------------- |
-| Amplitude Estimation       | [ ]      | [TODO]                                       |
-| Bernstein-Vazirani         | [x]      | Touchstone is more configurable.             |
-| Deutsch-Jozsa              | [ ]      | [TODO]                                       |
-| GHZ State                  | [x]      |                                              |
-| Graph State                | [ ]      | [TODO]                                       |
-| Grover                     | [ ]      | [TODO]                                       |
-| QAOA                       | [ ]      | [TODO]                                       |
-| QFT                        | [x]      | The benchmark here does not make much sense. |
-| QFT (entangled)            | [ ]      | Possibly beyond scope.                       |
-| QNN                        | [ ]      | [TODO]                                       |
-| Phase Estimation (exact)   | [ ]      | [TODO]                                       |
-| Phase Estimation (inexact) | [ ]      | [TODO]                                       |
-| Quark Cardinality          | [ ]      | [TODO]                                       |
-| Quark Copula               | [ ]      | [TODO]                                       |
-| Random Walk                | [ ]      | [TODO]                                       |
-| Random Circuit             | [ ]      | Not a meaningful algorithmic benchmark.      |
-| Shor                       | [ ]      | [TODO]                                       |
-| VQE Real Amplitude         | [ ]      | [TODO]                                       |
-| VQE SU(2)                  | [ ]      | [TODO]                                       |
-| VQE Two Local              | [ ]      | [TODO]                                       |
-| W State                    | [x]      |                                              |
+| Algorithm                  | Covered? | Notes                                                                           |
+| :------------------------- | :------- | :------------------------------------------------------------------------------ |
+| Amplitude Estimation       | [ ]      | [TODO]                                                                          |
+| Bernstein-Vazirani         | [x]      | Touchstone is more configurable.                                                |
+| Deutsch-Jozsa              | [ ]      | [TODO]                                                                          |
+| GHZ State                  | [x]      |                                                                                 |
+| Graph State                | [-]      | The benchmark as implemented does nothing.                                      |
+| Grover                     | [x]      | Touchstone is more configurable. MQT only allows searching for the 1...1 state. |
+| QAOA                       | [ ]      | [TODO]                                                                          |
+| QFT                        | [x]      | The benchmark here does not make much sense.                                    |
+| QFT (entangled)            | [x]      | We take a different approach to QFT benchmarking.                               |
+| QNN                        | [ ]      | [TODO]                                                                          |
+| Phase Estimation (exact)   | [ ]      | [TODO]                                                                          |
+| Phase Estimation (inexact) | [ ]      | [TODO]                                                                          |
+| Quark Cardinality          | [ ]      | [TODO]                                                                          |
+| Quark Copula               | [ ]      | [TODO]                                                                          |
+| Random Walk                | [ ]      | [TODO]                                                                          |
+| Random Circuit             | [-]      | Not a meaningful algorithmic benchmark.                                         |
+| Shor                       | [ ]      | [TODO]                                                                          |
+| VQE Real Amplitude         | [ ]      | [TODO]                                                                          |
+| VQE SU(2)                  | [ ]      | [TODO]                                                                          |
+| VQE Two Local              | [ ]      | [TODO]                                                                          |
+| W State                    | [x]      |                                                                                 |
 
 ## NWQBench
 
@@ -115,7 +115,7 @@ Last updated: April 28, 2025
 | Cat State          | [x]      | This is identical to GHZ state preparation.                                 |
 | CC                 | [ ]      | [TODO] What is this?                                                        |
 | GHZ State          | [x]      | They incorrectly have a Cat state module which yields an identical circuit. |
-| Grover             | [ ]      | [TODO]                                                                      |
+| Grover             | [x]      | Touchstone is more configurable.                                            |
 | HHL                | [ ]      | [TODO]                                                                      |
 | Ising              | [ ]      | [TODO]                                                                      |
 | Multiplier         | [ ]      | [TODO]                                                                      |

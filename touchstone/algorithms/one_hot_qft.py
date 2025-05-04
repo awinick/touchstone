@@ -61,10 +61,11 @@ class OneHotQFT(BaseAlgorithm, HasDistribution):
     def _build(self) -> QuantumCircuit:
         circuit = QuantumCircuit(self.num_qubits, name=self.name)
 
+        circuit.h(circuit.qubits)
+
         hidden_int = int(self.hidden_string, 2)
-        for qubit in range(self.num_qubits):
-            circuit.h(qubit)
-            circuit.p(-hidden_int * np.pi / 2 ** (self.num_qubits - qubit - 1), qubit)
+        for i, qubit in enumerate(circuit.qubits):
+            circuit.p(-2 * np.pi * hidden_int / (1 << (self.num_qubits - i)), qubit)
 
         circuit.barrier()
 

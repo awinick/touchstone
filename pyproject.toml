@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "quantum-touchstone"
 version = "0.1.0"
-description = "Canonical quantum benchmark circuits and algorithms"
+description = "A modern library for structured quantum benchmarking circuits"
 authors = ["Adam Winick <adam.winick@gmail.com>"]
 license = "Apache-2.0"
 readme = "README.md"
@@ -44,10 +44,10 @@ extend-select = [
     "C4",   # flake8-comprehensions (catch dumb for-loop errors)
     "RET",  # flake8-return (clean returns)
     "RSE",  # flake8-raise (correct raise patterns)
-    "ARG",   # Unused function arguments
-    "Q",     # Quote styles (consistent use of ' or ")
-    "I",     # Import sorting (ruff built-in isort)
-    "NPY",   # numpy specific rules (harmless, clean)
+    "ARG",  # Unused function arguments
+    "Q",    # Quote styles (consistent use of ' or ")
+    "I",    # Import sorting (ruff built-in isort)
+    "NPY",  # numpy specific rules
     "SIM",  # code simplifications
     "PERF", # performance anti-patterns
 ]
@@ -74,10 +74,3 @@ warn_unused_ignores = true
 namespace_packages = true
 disallow_untyped_defs = true
 explicit_package_bases = true
-
-[tool.pytest.ini_options]
-filterwarnings = [
-    "error",
-    "ignore:The property ``qiskit.dagcircuit.dagcircuit.DAGCircuit.duration`` is deprecated as of qiskit 1.3.0*:DeprecationWarning",
-    "ignore:The property ``qiskit.dagcircuit.dagcircuit.DAGCircuit.unit`` is deprecated as of qiskit 1.3.0*:DeprecationWarning"
-]

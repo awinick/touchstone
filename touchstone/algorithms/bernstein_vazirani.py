@@ -11,7 +11,7 @@ Identifies a hidden bitstring using a single query to a phase oracle.
 from __future__ import annotations
 
 import numpy as np
-from qiskit.circuit import QuantumCircuit
+from qiskit.circuit import AncillaRegister, ClassicalRegister, QuantumCircuit, QuantumRegister
 
 from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution
 from touchstone.metadata.tags import Tag, tagged
@@ -58,32 +58,32 @@ class BernsteinVazirani(BaseAlgorithm, HasDistribution):
         return num_qubits >= 2
 
     def _build(self) -> QuantumCircuit:
-        num_system_qubits = self.num_qubits - 1
-        circuit = QuantumCircuit(self.num_qubits, num_system_qubits)
+        system = QuantumRegister(self.num_qubits - 1, "system")
+        ancilla = AncillaRegister(1)
+        result = ClassicalRegister(self.num_qubits - 1, "result")
 
-        # Put the ancilla qubit in the |1> state
-        circuit.h(num_system_qubits)
-        circuit.z(num_system_qubits)
+        circuit = QuantumCircuit(system, ancilla, result, name=self.name)
 
-        # Apply Hadamard gates to all qubits
-        for index in range(num_system_qubits):
-            circuit.h(index)
+        # All qubits in the |+> state
+        circuit.h(circuit.qubits)
+
+        # Ancilla qubit in the |-> state
+        circuit.z(ancilla)
 
         circuit.barrier()
 
         # Loop over qubits and apply the oracle
-        for index, bit in enumerate(self.hidden_string[::-1]):
+        for qubit, bit in zip(system, self.hidden_string[::-1]):
             if bit == "0":
-                circuit.p(0, index)
+                circuit.p(0, qubit)
             else:
-                circuit.cx(index, num_system_qubits)
+                circuit.cx(qubit, ancilla)
 
-        # Apply Hadamard gates to all qubits again
-        for index in range(num_system_qubits):
-            circuit.h(index)
+        # Apply a Hadamard gate to all system qubits
+        circuit.h(system)
 
         circuit.barrier()
-        circuit.measure(range(num_system_qubits), range(num_system_qubits))
+        circuit.measure(system, result)
 
         return circuit
 
