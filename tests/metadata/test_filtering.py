@@ -7,7 +7,7 @@
 import pytest
 
 from touchstone.algorithms.base_algorithm import BaseAlgorithm
-from touchstone.metadata.fitering import filter_algorithms, instantiate_by
+from touchstone.metadata.filtering import filter_algorithms, instantiate_by
 from touchstone.metadata.tags import Tag
 
 
