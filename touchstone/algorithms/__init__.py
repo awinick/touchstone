@@ -17,6 +17,7 @@ from touchstone.algorithms.bernstein_vazirani import BernsteinVazirani
 from touchstone.algorithms.ghz import GHZ
 from touchstone.algorithms.grover import Grover
 from touchstone.algorithms.one_hot_qft import OneHotQFT
+from touchstone.algorithms.phase_estimation import PhaseEstimation
 from touchstone.algorithms.ripple_carry_adder import RippleCarryAdder
 from touchstone.algorithms.swap_test import SwapTest
 from touchstone.algorithms.w_state import WState
@@ -30,6 +31,7 @@ __all__ = [
     "GHZ",
     "Grover",
     "OneHotQFT",
+    "PhaseEstimation",
     "RippleCarryAdder",
     "SwapTest",
     "WState",

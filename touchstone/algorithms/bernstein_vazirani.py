@@ -64,10 +64,11 @@ class BernsteinVazirani(BaseAlgorithm, HasDistribution):
 
         circuit = QuantumCircuit(system, ancilla, result, name=self.name)
 
-        # All qubits in the |+> state
-        circuit.h(circuit.qubits)
+        # All system qubits in the |+> state
+        circuit.h(system)
 
         # Ancilla qubit in the |-> state
+        circuit.h(ancilla)
         circuit.z(ancilla)
 
         circuit.barrier()

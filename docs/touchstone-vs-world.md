@@ -10,23 +10,23 @@ Last updated: April 27, 2025
 
 The [QC-App-Oriented-Benchmarks](https://github.com/SRI-International/QC-App-Oriented-Benchmarks) project, developed under the Quantum Economic Development Consortium (QED-C), defines a set of application-focused quantum algorithms and benchmark tasks.
 
-| Algorithm              | Covered? | Notes                                                                                                                                 |
-| :--------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------ |
-| Amplitude Estimation   | [x]      | Touchstone is more configurable.                                                                                                      |
-| Bernstein-Vazirani     | [x]      | Touchstone is more configurable.                                                                                                      |
-| Deutsch-Jozsa          | [ ]      | [TODO]                                                                                                                                |
-| Grover                 | [x]      | Touchstone is more configurable.                                                                                                      |
-| Hamiltonian Simulation | [ ]      | They just do Heisenberg model with disordered fields and the Transverse Field Ising Model (TFIM), both with open boundary conditions. |
-| Hamlib                 | [ ]      | See Hamlib. They only do a tiny subset.                                                                                               |
-| HHL                    | [ ]      | [TODO]                                                                                                                                |
-| Hidden Shift           | [ ]      | [TODO]                                                                                                                                |
-| Hydrogen Lattice       | [ ]      | [TODO]                                                                                                                                |
-| Image Reconstruction   | [ ]      | Beyond scope for Touchstone.                                                                                                          |
-| Maxcut                 | [ ]      | [TODO]                                                                                                                                |
-| Monte-Carlo            | [ ]      | Beyond scope for Touchstone - Application of Amplitude Estimation.                                                                    |
-| Phase Estimation       | [ ]      | [TODO]                                                                                                                                |
-| Shor                   | [ ]      | [TODO]                                                                                                                                |
-| VQE                    | [ ]      | [TODO]                                                                                                                                |
+| Algorithm              | Covered? | Notes                                                                                 |
+| :--------------------- | :------- | :------------------------------------------------------------------------------------ |
+| Amplitude Estimation   | [ ]      |                                                                                       |
+| Bernstein-Vazirani     | [x]      | Touchstone is more configurable.                                                      |
+| Deutsch-Jozsa          | [ ]      | [TODO]                                                                                |
+| Grover                 | [x]      | Touchstone is more configurable.                                                      |
+| Hamiltonian Simulation | [ ]      | Heisenberg model with disordered fields and TFIM, both with open boundary conditions. |
+| Hamlib                 | [ ]      | See Hamlib. They only do a tiny subset.                                               |
+| HHL                    | [ ]      | [TODO]                                                                                |
+| Hidden Shift           | [ ]      | [TODO]                                                                                |
+| Hydrogen Lattice       | [ ]      | [TODO]                                                                                |
+| Image Reconstruction   | [ ]      | Beyond scope for Touchstone.                                                          |
+| Maxcut                 | [ ]      | [TODO]                                                                                |
+| Monte-Carlo            | [ ]      | Beyond scope for Touchstone - Application of Amplitude Estimation.                    |
+| Phase Estimation       | [x]      | Touchstone is more configurable.                                                      |
+| Shor                   | [ ]      | [TODO]                                                                                |
+| VQE                    | [ ]      | [TODO]                                                                                |
 
 ## Supermarq
 
@@ -34,16 +34,16 @@ Last updated: April 27, 2025
 
 [Supermarq](https://github.com/Infleqtion/client-superstaq/) is a suite of application-oriented benchmarks used to measure the performance of quantum computing systems.
 
-| Algorithm                 | Covered? | Notes                                                                                                                                     |
-| :------------------------ | :------- | :---------------------------------------------------------------------------------------------------------------------------------------- |
-| Bit Code                  | [ ]      | [TODO]                                                                                                                                    |
-| GHZ State                 | [x]      |                                                                                                                                           |
-| Hamiltonian Simulation    | [ ]      | 1D TFIM for Molybdenum diselenide.                                                                                                        |
-| Mermin Bell               | [-]      | Touchstone provides circuits for GHZ state preparation. Support for simultaneous Mermin operator measurement and scoring is beyond scope. |
-| Phase Code                | [ ]      | [TODO]                                                                                                                                    |
-| QAOA Fermionic Swap Proxy | [ ]      | Need to read more. [TODO]                                                                                                                 |
-| QAOA Vanilla Proxy        | [ ]      | MaxCut on a Sherrington-Kirkpatrick (SK) model. [TODO]                                                                                    |
-| VQE Proxy                 | [ ]      | Need to read more. [TODO]                                                                                                                 |
+| Algorithm                 | Covered? | Notes                                                                                                            |
+| :------------------------ | :------- | :--------------------------------------------------------------------------------------------------------------- |
+| Bit Code                  | [ ]      | [TODO]                                                                                                           |
+| GHZ State                 | [x]      |                                                                                                                  |
+| Hamiltonian Simulation    | [ ]      | 1D TFIM for Molybdenum diselenide.                                                                               |
+| Mermin Bell               | [-]      | Touchstone provides circuits for GHZ state preparation. Mermin operator measurement and scoring is beyond scope. |
+| Phase Code                | [ ]      | [TODO]                                                                                                           |
+| QAOA Fermionic Swap Proxy | [ ]      | Need to read more. [TODO]                                                                                        |
+| QAOA Vanilla Proxy        | [ ]      | MaxCut on a Sherrington-Kirkpatrick (SK) model. [TODO]                                                           |
+| VQE Proxy                 | [ ]      | Need to read more. [TODO]                                                                                        |
 
 ## Open QBench
 
@@ -89,7 +89,7 @@ Last updated: April 27, 2025
 | QFT                        | [x]      | The benchmark here does not make much sense.                                    |
 | QFT (entangled)            | [x]      | We take a different approach to QFT benchmarking.                               |
 | QNN                        | [ ]      | [TODO]                                                                          |
-| Phase Estimation (exact)   | [ ]      | [TODO]                                                                          |
+| Phase Estimation (exact)   | [x]      | Touchstone is more configurable.                                                |
 | Phase Estimation (inexact) | [ ]      | [TODO]                                                                          |
 | Quark Cardinality          | [ ]      | [TODO]                                                                          |
 | Quark Copula               | [ ]      | [TODO]                                                                          |
