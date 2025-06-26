@@ -34,7 +34,7 @@ repos:
       - id: check-toml
       - id: check-added-large-files
       - id: check-yaml
-        args: ["--unsafe"]
+        args: ["--allow-multiple-documents"]
       - id: check-docstring-first
       - id: mixed-line-ending
       - id: debug-statements
