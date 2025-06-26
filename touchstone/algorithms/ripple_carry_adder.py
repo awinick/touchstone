@@ -103,7 +103,7 @@ class RippleCarryAdder(BaseAlgorithm, HasDistribution):
         # Copy final carry bit into carry_out using CNOT
         circuit.cx(augend[self.num_bits - 1], carry_out)
 
-        # Backward pass: uncompute carries using unmajority gates
+        # Backward pass: un-compute carries using unmajority gates
         for i in range(self.num_bits - 1, -1, -1):
             circuit.append(
                 UnmajorityGate(),
@@ -167,7 +167,7 @@ class MajorityGate(Gate):
 
 
 class UnmajorityGate(Gate):
-    """Unmajority gate used to uncompute carry bits in ripple-carry addition."""
+    """Unmajority gate used to un-compute carry bits in ripple-carry addition."""
 
     def __init__(self) -> None:
         """Initialize a 3-qubit unmajority gate."""

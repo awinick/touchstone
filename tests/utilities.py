@@ -27,7 +27,7 @@ def simulate_distribution(
     circuit : QuantumCircuit
         The input quantum circuit containing measurements.
     tolerance : float, optional
-        Minimum probability threshold to include in the result (default is 1e-10).
+        Minimum probability threshold to include in the result.
 
     Returns
     -------

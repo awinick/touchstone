@@ -48,8 +48,8 @@ class Grover(BaseAlgorithm, HasDistribution):
 
         iterations : Optional[int]
             Number of Grover iterations to apply. If None, an optimal value is computed as
-            $$\left\lfloor \frac{\pi}{4} \sqrt{\frac{2^n}{m}} \right\rfloor \,,$$
-            where `n` is the number of qubits and `m` is the number of hidden strings.
+            $\left\lfloor \frac{\pi}{4} \sqrt{\frac{2^n}{m}} \right\rfloor \,,$
+            where $n$ is the number of qubits and $m$ is the number of hidden strings.
 
         Raises
         ------

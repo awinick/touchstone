@@ -6,7 +6,7 @@
 Defines a standard interface and organizational pattern for quantum algorithms.
 
 All algorithms inherit from `BaseAlgorithm`, which provides a uniform interface for circuit
-construction, metadata access, and configurable measurement modes.
+construction and metadata access.
 
 Algorithms can be filtered, instantiated, and exported using the high-level utilities provided
 by the library.
@@ -14,6 +14,7 @@ by the library.
 
 from touchstone.algorithms.base_algorithm import BaseAlgorithm, HasDistribution
 from touchstone.algorithms.bernstein_vazirani import BernsteinVazirani
+from touchstone.algorithms.deutsch_jozsa import DeutschJozsa
 from touchstone.algorithms.ghz import GHZ
 from touchstone.algorithms.grover import Grover
 from touchstone.algorithms.one_hot_qft import OneHotQFT
@@ -28,6 +29,7 @@ __all__ = [
     "HasDistribution",
     # Algorithms
     "BernsteinVazirani",
+    "DeutschJozsa",
     "GHZ",
     "Grover",
     "OneHotQFT",

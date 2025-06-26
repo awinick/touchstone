@@ -4,10 +4,12 @@
 
 """Top-level package interface for the Touchstone library."""
 
+from touchstone import algorithms
 from touchstone.metadata.filtering import filter_algorithms, instantiate_by
 from touchstone.metadata.tags import Tag
 
 __all__ = [
+    "algorithms",
     "Tag",
     "filter_algorithms",
     "instantiate_by",
