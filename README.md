@@ -12,6 +12,13 @@ _/ˈtəCHˌstōn/_ • _noun_
 
 **Touchstone** is a modern library for generating **structured quantum benchmarking circuits** focusing on clarity, composability, and usability.
 
+⚠️ Status: Early public release
+
+Touchstone is currently an early-stage project. The API and core library are stable,
+but packaging and installation workflows are still being finalized.
+
+For now the recommended way to use Touchstone is installing from source.
+
 ## Why Touchstone?
 
 Most quantum benchmarking tools today are either overly academic or painfully inflexible. Touchstone is a fresh take on what circuit benchmarking should be:
